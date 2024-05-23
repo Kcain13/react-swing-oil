@@ -1,27 +1,33 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
 require('dotenv').config();
-
+const mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
-app.use(cors());
-app.use(express.json());
-
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
-const golferRoutes = require('./routes/golfers');
-const courseRoutes = require('./routes/courses');
-const roundRoutes = require('./routes/rounds');
-const gameTypeRoutes = require('./routes/gameTypes'); // Add this line
-
-
-app.use('/api/golfers', golferRoutes);
-app.use('/api/courses', courseRoutes);
-app.use('/api/rounds', roundRoutes);
-app.use('/api/gameTypes', gameTypeRoutes); // Add this line
+mongoose.set('strictQuery', false);
 
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}).catch((error) => {
+    console.error('Error connecting to MongoDB:', error.message);
 });
+
+app.use(bodyParser.json());
+
+const courseRoutes = require('./routes/courses');
+const roundRoutes = require('./routes/rounds');
+const golferRoutes = require('./routes/golfers');
+const gameTypeRoutes = require('./routes/gameTypes');
+
+app.use('/api/courses', courseRoutes);
+app.use('/api/rounds', roundRoutes);
+app.use('/api/golfers', golferRoutes);
+app.use('/api/game-types', gameTypeRoutes);

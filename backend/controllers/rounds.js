@@ -1,5 +1,5 @@
-const Round = require('../models/round');
-const Score = require('../models/score');
+const { Round, Rounds, Golfer, Milestone, Statistic, Score, Leaderboard, GameType } = require('../models');
+// Your existing code
 
 // Controller function to start a new round
 const startRound = async (req, res) => {

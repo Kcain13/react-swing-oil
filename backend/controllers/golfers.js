@@ -1,5 +1,5 @@
 // controllers/golfers.js
-const { Golfer, Milestone } = require('..');
+const { Golfer, Milestone, Statistic, Round, Score, Leaderboard, GameType } = require('../models');
 const { fetchGolferHandicap } = require('../utils/fetchGolferHandicap');
 
 const getGolferTrophyRoom = async (req, res) => {
