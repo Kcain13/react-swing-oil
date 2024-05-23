@@ -1,36 +1,32 @@
 const mongoose = require('mongoose');
+const Round = require('./round');
 
-const roundSchema = new mongoose.Schema({
-    golferId: {
+const roundsSchema = new mongoose.Schema({
+    golfer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Golfer',
         required: true
     },
-    courseId: {
+    rounds: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
-        required: true
-    },
-    teeId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tee',
-        required: true
-    },
-    gameTypeId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'GameType',
-        required: true
-    },
-    datePlayed: {
-        type: Date,
-        required: true
-    },
-    useHandicap: {
-        type: Boolean,
-        required: true
-    }
+        ref: 'Round'
+    }]
 });
 
-const Round = mongoose.model('Rounds', roundSchema);
+roundsSchema.methods.best_score = async function () {
+    const recentRounds = await Round.find({ _id: { $in: this.rounds } }).sort({ date_played: -1 }).limit(5);
+    return Math.min(...recentRounds.map(round => round.total_score()));
+};
 
-module.exports = Round;
+roundsSchema.methods.worst_score = async function () {
+    const recentRounds = await Round.find({ _id: { $in: this.rounds } }).sort({ date_played: -1 }).limit(5);
+    return Math.max(...recentRounds.map(round => round.total_score()));
+};
+
+roundsSchema.methods.avg_score = async function () {
+    const recentRounds = await Round.find({ _id: { $in: this.rounds } }).sort({ date_played: -1 }).limit(5);
+    const totalScore = recentRounds.reduce((sum, round) => sum + round.total_score(), 0);
+    return totalScore / recentRounds.length;
+};
+
+module.exports = mongoose.model('Rounds', roundsSchema);
