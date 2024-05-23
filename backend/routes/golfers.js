@@ -1,8 +1,8 @@
+// routes/golfers.js
 const express = require('express');
-const router = express.Router();
 const { getGolferTrophyRoom } = require('../controllers/golfers');
+const router = express.Router();
 
-// Route to get golfer's trophy room data
-router.get('/:golferId/trophy_room', getGolferTrophyRoom);
+router.get('/:golferId/trophy-room', getGolferTrophyRoom);
 
 module.exports = router;

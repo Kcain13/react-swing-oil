@@ -1,3 +1,4 @@
+// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
@@ -9,7 +10,7 @@ import CourseDetails from './components/courses/courseDetails';
 import RoundDetails from './components/rounds/roundDetails';
 import Scorecard from './components/rounds/scorecard';
 import Header from './components/common/header';
-import GameTypes from './components/GameTypes'; // Add this line
+import GolferTrophyRoom from './components/profile/trophyRoom';
 
 function App() {
   return (
@@ -17,15 +18,15 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/courses/search" element={<CourseSearch />} />
-          <Route path="/courses/:id" element={<CourseDetails />} />
-          <Route path="/rounds/:id" element={<RoundDetails />} />
-          <Route path="/scorecard/:id" element={<Scorecard />} />
-          <Route path="/game-types" element={<GameTypes />} /> {/* Add this line */}
+          <Route exact path="/" component={Home} />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/courses/search" component={CourseSearch} />
+          <Route path="/courses/:id" component={CourseDetails} />
+          <Route path="/rounds/:id" component={RoundDetails} />
+          <Route path="/scorecard/:id" component={Scorecard} />
+          <Route path="/golfers/:golferId/trophy-room" component={GolferTrophyRoom} />
         </Routes>
       </div>
     </Router>

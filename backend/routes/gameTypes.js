@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getGameTypes } = require('../controllers/gameTypes');
+const { getAllGameTypes, addGameType } = require('../controllers/gameTypes');
 
-router.get('/', getGameTypes);
+// Define the routes
+router.get('/', getAllGameTypes);
+router.post('/', addGameType);
 
 module.exports = router;

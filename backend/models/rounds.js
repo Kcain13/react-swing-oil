@@ -31,6 +31,6 @@ const roundSchema = new mongoose.Schema({
     }
 });
 
-const Round = mongoose.model('Round', roundSchema);
+const Round = mongoose.model('Rounds', roundSchema);
 
 module.exports = Round;

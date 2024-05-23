@@ -1,3 +1,5 @@
+// src/components/profile/trophyRoom.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -11,7 +13,7 @@ const TrophyRoom = () => {
     useEffect(() => {
         const fetchTrophyRoom = async () => {
             try {
-                const response = await axios.get(`/api/golfers/${golferId}/trophy_room`);
+                const response = await axios.get(`/api/golfers/${golferId}/trophy-room`);
                 setGolfer(response.data.golfer);
                 setMilestones(response.data.milestones);
                 setHandicap(response.data.handicap);

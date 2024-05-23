@@ -4,6 +4,31 @@ const Score = require('../models/score');
 const Leaderboard = require('../models/leaderboard');
 const Statistic = require('../models/statistic');
 
+
+
+// Get all game types
+const getAllGameTypes = async (req, res) => {
+    try {
+        const gameTypes = await GameType.find();
+        res.json(gameTypes);
+    } catch (error) {
+        console.error('Error fetching game types:', error);
+        res.status(500).json({ message: 'Failed to fetch game types' });
+    }
+};
+
+// Add a new game type
+const addGameType = async (req, res) => {
+    const { name, description, rules } = req.body;
+    try {
+        const newGameType = new GameType({ name, description, rules });
+        await newGameType.save();
+        res.status(201).json(newGameType);
+    } catch (error) {
+        console.error('Error adding game type:', error);
+        res.status(500).json({ message: 'Failed to add game type' });
+    }
+};
 // Update leaderboard based on game type
 const updateLeaderboard = async (roundId) => {
     const round = await Round.findById(roundId).populate('game_type');
@@ -112,6 +137,8 @@ const processSoloPlay = async (round) => {
 };
 
 module.exports = {
+    getAllGameTypes,
+    addGameType,
     updateLeaderboard,
     processMatchPlay,
     processStrokePlay,

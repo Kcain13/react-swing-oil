@@ -1,5 +1,25 @@
-const { Round, Score } = require('../models');
+const Round = require('../models/round');
+const Score = require('../models/score');
 
+// Controller function to start a new round
+const startRound = async (req, res) => {
+    const { golferId, courseId, teeId, gameTypeId, useHandicap } = req.body;
+    try {
+        const newRound = new Round({
+            golferId,
+            courseId,
+            teeId,
+            gameTypeId,
+            useHandicap,
+            datePlayed: new Date()
+        });
+        await newRound.save();
+        res.status(201).json(newRound);
+    } catch (error) {
+        console.error('Error starting a new round:', error);
+        res.status(500).json({ message: 'Failed to start a new round' });
+    }
+};
 // Helper function to calculate statistics from scores
 const calculateStatistics = (scores) => {
     const totalScore = scores.reduce((acc, score) => acc + score.score, 0);
@@ -78,6 +98,7 @@ const submitScores = async (roundId, scores) => {
 };
 
 module.exports = {
-    getRoundDetails,
-    submitScores
+    startRound,
+    submitScores,
+    getRoundDetails
 };
