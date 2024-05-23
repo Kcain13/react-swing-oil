@@ -1,0 +1,85 @@
+/* src/index.css or src/App.css */
+
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f3f3;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  color: #002f6c;
+  font-weight: bold;
+  text-align: center;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #4ca1af;
+  color: #fff;
+}
+
+.table .hole-info {
+  background-color: #f9f9f9;
+}
+
+.table .par,
+.table .yardage,
+.table .handicap {
+  background-color: #dfe6e9;
+}
+
+.table .score,
+.table .putts,
+.table .bunker-shots,
+.table .penalties {
+  background-color: #ffeaa7;
+}
+
+.form-control,
+.btn-primary {
+  border-radius: 4px;
+}
+
+.form-control {
+  padding: 10px;
+  border: 2px solid #002f6c;
+  margin-bottom: 15px;
+}
+
+.btn-primary {
+  background-color: #002f6c;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #001940;
+}
