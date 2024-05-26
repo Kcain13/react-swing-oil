@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Score = require('./score');
+
 
 const roundSchema = new mongoose.Schema({
     date_played: {

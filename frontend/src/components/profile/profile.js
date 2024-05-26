@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProfileForm from './profileForm';
+import ProfileForm from './ProfileForm';
 import axios from 'axios';
 
 const Profile = () => {

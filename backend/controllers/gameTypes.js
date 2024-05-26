@@ -1,8 +1,8 @@
-const GameType = require('../models/gameType');
-const Round = require('../models/round');
-const Score = require('../models/score');
-const Leaderboard = require('../models/leaderboard');
-const Statistic = require('../models/statistic');
+const GameType = require('../models/GameType');
+const Round = require('../models/Round');
+const Score = require('../models/Score');
+const Leaderboard = require('../models/Leaderboard');
+const Statistic = require('../models/Statistic');
 
 
 

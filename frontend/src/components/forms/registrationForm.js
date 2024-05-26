@@ -1,96 +1,148 @@
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { registrationSchema } from '../../utils/Validation';
 
 const RegistrationForm = () => {
-    const initialValues = {
-        firstName: '',
-        lastName: '',
-        username: '',
-        email: '',
-        password: '',
-        ghinId: '',
-        state: ''
-    };
+    const navigate = useNavigate();
+    const [error, setError] = useState(null);
 
-    const validationSchema = Yup.object({
-        firstName: Yup.string().required('Required'),
-        lastName: Yup.string().required('Required'),
-        username: Yup.string().required('Required'),
-        email: Yup.string().email('Invalid email format').required('Required'),
-        password: Yup.string().required('Required'),
-        ghinId: Yup.string().required('Required'),
-        state: Yup.string().required('Required')
+    const formik = useFormik({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            username: '',
+            email: '',
+            password: '',
+            ghinId: '',
+            stateCode: ''
+        },
+        validationSchema: registrationSchema,
+        onSubmit: async (values, { setSubmitting }) => {
+            try {
+                await axios.post('/api/auth/register', values);
+                navigate('/login'); // Redirect to login page after successful registration
+            } catch (error) {
+                setError(error.response ? error.response.data.error : 'Registration failed');
+            } finally {
+                setSubmitting(false);
+            }
+        }
     });
 
-    const onSubmit = async (values, { setSubmitting, setErrors }) => {
-        try {
-            const response = await axios.post('/register', values);
-            console.log(response.data);
-            // Handle successful registration (e.g., redirect to login page)
-        } catch (error) {
-            if (error.response && error.response.data) {
-                const { message } = error.response.data;
-                setErrors({ username: message });
-            }
-        } finally {
-            setSubmitting(false);
-        }
-    };
-
     return (
-        <div className="container">
-            <h2>Register</h2>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-            >
-                {({ isSubmitting }) => (
-                    <Form>
-                        <div className="form-group">
-                            <label htmlFor="firstName">First Name</label>
-                            <Field name="firstName" className="form-control" />
-                            <ErrorMessage name="firstName" component="div" className="text-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="lastName">Last Name</label>
-                            <Field name="lastName" className="form-control" />
-                            <ErrorMessage name="lastName" component="div" className="text-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="username">Username</label>
-                            <Field name="username" className="form-control" />
-                            <ErrorMessage name="username" component="div" className="text-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <Field name="email" type="email" className="form-control" />
-                            <ErrorMessage name="email" component="div" className="text-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <Field name="password" type="password" className="form-control" />
-                            <ErrorMessage name="password" component="div" className="text-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="ghinId">GHIN ID</label>
-                            <Field name="ghinId" className="form-control" />
-                            <ErrorMessage name="ghinId" component="div" className="text-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="state">State of Residency</label>
-                            <Field name="state" className="form-control" />
-                            <ErrorMessage name="state" component="div" className="text-danger" />
-                        </div>
-                        <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                            Register
-                        </button>
-                    </Form>
-                )}
-            </Formik>
-        </div>
+        <form onSubmit={formik.handleSubmit}>
+            {error && <div className="error">{error}</div>}
+            <div>
+                <label htmlFor="firstName">First Name</label>
+                <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.firstName || ''}
+                    autoComplete="given-name"
+                />
+                {formik.touched.firstName && formik.errors.firstName ? (
+                    <div>{formik.errors.firstName}</div>
+                ) : null}
+            </div>
+            <div>
+                <label htmlFor="lastName">Last Name</label>
+                <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.lastName || ''}
+                    autoComplete="family-name"
+                />
+                {formik.touched.lastName && formik.errors.lastName ? (
+                    <div>{formik.errors.lastName}</div>
+                ) : null}
+            </div>
+            <div>
+                <label htmlFor="username">Username</label>
+                <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.username || ''}
+                    autoComplete="username"
+                />
+                {formik.touched.username && formik.errors.username ? (
+                    <div>{formik.errors.username}</div>
+                ) : null}
+            </div>
+            <div>
+                <label htmlFor="email">Email</label>
+                <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email || ''}
+                    autoComplete="email"
+                />
+                {formik.touched.email && formik.errors.email ? (
+                    <div>{formik.errors.email}</div>
+                ) : null}
+            </div>
+            <div>
+                <label htmlFor="password">Password</label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.password || ''}
+                    autoComplete="new-password"
+                />
+                {formik.touched.password && formik.errors.password ? (
+                    <div>{formik.errors.password}</div>
+                ) : null}
+            </div>
+            <div>
+                <label htmlFor="ghinId">GHIN ID</label>
+                <input
+                    id="ghinId"
+                    name="ghinId"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.ghinId || ''}
+                    autoComplete="off"
+                />
+                {formik.touched.ghinId && formik.errors.ghinId ? (
+                    <div>{formik.errors.ghinId}</div>
+                ) : null}
+            </div>
+            <div>
+                <label htmlFor="stateCode">State</label>
+                <input
+                    id="stateCode"
+                    name="stateCode"
+                    type="text"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.stateCode || ''}
+                    autoComplete="address-level1"
+                />
+                {formik.touched.stateCode && formik.errors.stateCode ? (
+                    <div>{formik.errors.stateCode}</div>
+                ) : null}
+            </div>
+            <div>
+                <button type="submit" disabled={formik.isSubmitting}>Register</button>
+            </div>
+        </form>
     );
 };
 

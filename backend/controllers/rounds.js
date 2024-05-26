@@ -1,4 +1,4 @@
-const { Round, Rounds, Golfer, Milestone, Statistic, Score, Leaderboard, GameType } = require('../models');
+const { Round, Rounds, Golfer, Milestone, Statistic, Score, Leaderboard, GameType } = require('../models/Index');
 // Your existing code
 
 // Controller function to start a new round
@@ -100,5 +100,7 @@ const submitScores = async (roundId, scores) => {
 module.exports = {
     startRound,
     submitScores,
-    getRoundDetails
+    getRoundDetails,
+    submitScores,
+    calculateStatistics
 };

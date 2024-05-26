@@ -1,6 +1,6 @@
 // utils/fetchGolferHandicap.js
 const axios = require('axios');
-const { getAdminToken } = require('./tokenManager');
+const { getAdminToken } = require('./TokenManager');
 
 const fetchGolferHandicap = async (ghinId, lastName, state) => {
     try {

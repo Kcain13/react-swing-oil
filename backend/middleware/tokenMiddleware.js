@@ -1,8 +1,8 @@
 // middleware/tokenMiddleware.js
 
-const { getAdminToken } = require('../utils/tokenManager');
+const { getAdminToken } = require('../utils/TokenManager');
 
-async function tokenMiddleware(req, res, next) {
+async function TokenMiddleware(req, res, next) {
     const token = await getAdminToken();
     if (!token) {
         return res.status(500).json({ error: 'Failed to fetch admin token' });
@@ -11,4 +11,4 @@ async function tokenMiddleware(req, res, next) {
     next();
 }
 
-module.exports = tokenMiddleware;
+module.exports = TokenMiddleware;

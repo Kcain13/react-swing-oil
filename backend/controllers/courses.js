@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { getAdminToken } = require('../utils/tokenManager');
+const { getAdminToken } = require('../utils/TokenManager');
 // const { Course } = require('./models')
 
 const searchCourses = async (query) => {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Round = require('./round');
+const Round = require('./Round');
 
 const roundsSchema = new mongoose.Schema({
     golfer: {

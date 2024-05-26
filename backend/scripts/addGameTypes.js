@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const GameType = require('../models/gameType');
+const GameType = require('../models/GameType');
 require('dotenv').config();  // Load environment variables from .env file
 
-const mongoUri = process.env.MONGO_URI;
+const mongoUri = `${process.env.MONGO_URI}/swing_oil_society`;
 if (!mongoUri) {
     throw new Error("MONGO_URI is not defined in the environment variables");
 }
